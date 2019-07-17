@@ -5,9 +5,11 @@ const db = require('./db.js')
 const eventRouter = require('./event/router')
 const ticketRouter = require('./ticket/router')
 const commentRouter = require('./comment/router')
+const userRouter = require('./user/router')
 const event = require('./event/model')
 const ticket = require('./ticket/model')
 const comment = require('./comment/model')
+const user = require('./user/model')
 const app = express()
 const jsonParser = bodyParser.json()
 
@@ -16,6 +18,7 @@ app.use(jsonParser)
 app.use(eventRouter)
 app.use(ticketRouter)
 app.use(commentRouter)
+app.use(userRouter)
 
 const port = process.env.PORT || 4000
 

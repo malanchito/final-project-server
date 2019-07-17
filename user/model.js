@@ -1,18 +1,23 @@
 const Sequelize = require('sequelize')
-const sequelize = require('../db')
+const db = require('../db.js')
 
-const User = sequelize.define('user', {
-  username: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-}, {
-  timestamps: false,
-  tableName: 'users'
-})
+const User = db.define(
+  'user', 
+  {
+    username: {
+      type: Sequelize.STRING,
+      field: 'user_username',
+      allowNull: false
+    },
+    password: {
+      type: Sequelize.STRING,
+      field: 'user_password',
+      allowNull: false
+    },
+  }, 
+  {
+    timestamps: false,
+  }
+)
 
 module.exports = User
