@@ -9,9 +9,9 @@ router.post('/users/', function (req, res,next) {
     .catch(next)
   })
 
-router.get('/tickets', function (req, res, next) {
+router.get('/ticket/:author', function (req, res, next) {
     Ticket.findAll({        
-      where: {author:req.body.name}
+      where: {author:req.params.author}
     })
     .then(ticket => {res.json({ tickets: ticket })})
     .catch(next)
