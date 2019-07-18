@@ -1,11 +1,19 @@
 const express = require('express')
 const User = require('./model.js')
 const Ticket = require('../ticket/model')
+const bcrypt = require('bcrypt');
 const router=express.Router()
 
 router.post('/users/', function (req, res,next) {
-    User.create(req.body)
-    .then(user => res.status(201).json(user.username))
+    const user = {
+      username: req.body.username,
+      password: bcrypt.hashSync(req.body.password, 10)
+    }
+    User.create(user)
+    .then(user => res.status(201).json({
+                            message: "A NEW USER WAS ADDED",
+                              "new user": user.username
+    }))
     .catch(next)
   })
 

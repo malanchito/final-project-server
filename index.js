@@ -6,6 +6,8 @@ const eventRouter = require('./event/router')
 const ticketRouter = require('./ticket/router')
 const commentRouter = require('./comment/router')
 const userRouter = require('./user/router')
+const JWT = require('./auth/jwt')
+const authRouter = require('./auth/router')
 const event = require('./event/model')
 const ticket = require('./ticket/model')
 const comment = require('./comment/model')
@@ -19,6 +21,7 @@ app.use(eventRouter)
 app.use(ticketRouter)
 app.use(commentRouter)
 app.use(userRouter)
+app.use(authRouter)
 
 const port = process.env.PORT || 4000
 
