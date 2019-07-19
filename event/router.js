@@ -4,8 +4,15 @@ const Ticket = require('../ticket/model')
 const router=express.Router()
 
 router.get('/events', function (req, res, next) {
-    Event.findAll()
-    .then(event => {res.json({ events: event })})
+  const limit = req.query.limit || 9
+  const offset = req.query.offset || 0  
+    Event
+    .count()
+    .then(total => 
+      Event
+      .findAll({ limit, offset })
+      .then(events => res.send({ events, total }))
+      )
     .catch(next)
   })
 router.post('/events', function (req, res,next) {
