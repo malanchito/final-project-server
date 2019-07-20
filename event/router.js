@@ -1,8 +1,10 @@
+const Sequelize = require('sequelize')
 const express = require('express')
 const Event = require('./model.js')
 const Ticket = require('../ticket/model')
 const router=express.Router()
 const auth = require('../auth/middleware')
+const Op = Sequelize.Op
 
 router.get('/events', function (req, res, next) {
   const limit = req.query.limit || 9
@@ -11,7 +13,12 @@ router.get('/events', function (req, res, next) {
     .count()
     .then(total => 
       Event
-      .findAll({ limit, offset })
+      .findAll( { 
+                  limit, 
+                  offset, 
+                  where: {end: {[Op.gte]: new Date()}} 
+                }
+      )
       .then(events => res.send({ events, total }))
       )
     .catch(next)
