@@ -10,7 +10,7 @@ router.get('/events', function (req, res, next) {
   const limit = req.query.limit || 9
   const offset = req.query.offset || 0  
     Event
-    .count()
+    .count({where: {end: {[Op.gte]: new Date()}}})
     .then(total => 
       Event
       .findAll( { 
