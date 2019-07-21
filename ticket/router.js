@@ -15,8 +15,19 @@ router.post('/events/:id', auth, (req, res,next) => {
 router.put('/tickets/:id', auth, (req, res, next) => {
     const id = req.params.id
     Ticket.findByPk(id)
-    .then(ticket=>ticket.update(req.body))
-    .then(ticket => res.status(200).json(ticket))
+    .then(ticket=>{
+          if(ticket.author!==req.user.username){
+            res
+              .status(403)
+              .send({
+                message: "You cannot modify this ticket because you're not the author"
+              })
+          }else{
+                ticket.update(req.body)
+                .then(ticket => res.status(200).json(ticket))
+                .catch(next)
+          }
+    })
     .catch(next)
   })  
 
