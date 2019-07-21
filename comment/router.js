@@ -9,9 +9,17 @@ router.post('/tickets/:id', auth, (req, res, next) => {
   const comment = {...req.body,
        ticketId: ticketId
   }
-  Comment.create(comment)
-  .then(comment => res.status(201).json(comment))
-  .catch(next)
+  if(comment.author!==req.user.username){
+    res
+      .status(403)
+      .send({
+        message: "The author of the comment can only be your own username"
+      })
+  }else{
+    Comment.create(comment)
+    .then(comment => res.status(201).json(comment))
+    .catch(next)
+  }
 })
 
 router.get('/tickets/:id', function (req, res, next) {
